@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Programmers</title>
+    <style>
+        /* Styles from the original code */
+        body {
+            background-image: url('image/info.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header, .info-section, .content {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7); 
+            border-radius: 8px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header img {
+            height: 60px;
+            margin-right: 20px;
+        }
+
+        .header span {
+            font-size: 24px;
+        }
+
+        label, select, input, textarea, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .delete-button {
+            background-color: #e74c3c;
+            margin-top: 10px;
+        }
+
+        .delete-button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div class="navbar">
+    <a href="homep.html">Home</a>
+    <a href="contact.html">Contact</a>
+    <a href="info.html">Info</a>
+</div>
+
+    <div class="header">
+        <img src="image/logo.jpg" alt="Logo"> 
+        <span>Welcome to Riyadh Hacker - Where Skilled Freelance Programmers Meet Innovation</span>
+    </div>
+
+    <div class="info-section">
+        <h2>About Riyadh Hacker</h2>
+        <p>
+            Are you searching for top-notch freelance programmers who can bring your ideas to life? Hacker is the ultimate destination for businesses and individuals looking for skilled professionals across a wide range of specialties. Our community of experts offers a wealth of knowledge in iOS and Android development, game creation, artificial intelligence, backend and frontend engineering, and cybersecurity. But that’s not all—Hacker stands out as one of the few platforms with a quantum computing developer ready to take your projects to the next level.
+        </p>
+    </div>
+
+    <div class="content">
+        <h2>Add a New Freelancer</h2>
+        <form id="freelancerForm">
+            <label for="newFreelancerName">Freelancer Name:</label>
+            <input type="text" id="newFreelancerName" required>
+
+            <label for="newProgrammingField">Programming Field:</label>
+            <select id="newProgrammingField">
+                <!-- Existing options -->
+                <option value="iOS">iOS</option>
+                <option value="Android">Android</option>
+                <option value="Games">Games</option>
+                <option value="AI">AI</option>
+                <option value="Backend">Backend</option>
+                <option value="Frontend">Frontend</option>
+                <option value="Cybersecurity">Cybersecurity</option>
+                <option value="Quantum Computing">Quantum Computing</option>
+            </select>
+
+            <label for="addNewField">Add New Programming Field:</label>
+            <input type="text" id="addNewField">
+
+            <button type="button" onclick="addFreelancer()">Add Freelancer</button>
+        </form>
+
+        <h2>Freelancers</h2>
+        <div id="freelancerList"></div>
+    </div>
+
+    <script>
+        const freelancers = [];
+        const programmingFieldSelect = document.getElementById("newProgrammingField");
+
+        function addFreelancer() {
+            const name = document.getElementById("newFreelancerName").value;
+            let field = document.getElementById("newProgrammingField").value;
+            const newField = document.getElementById("addNewField").value;
+
+            if (newField) {
+                field = newField;
+                addProgrammingFieldOption(newField);
+            }
+
+            freelancers.push({ name, field });
+            displayFreelancers();
+
+            document.getElementById("freelancerForm").reset();
+        }
+
+        function addProgrammingFieldOption(field) {
+            const option = document.createElement("option");
+            option.value = field;
+            option.text = field;
+            programmingFieldSelect.add(option);
+
+            // Also add to the review form's select and filter options
+            const reviewSelect = document.getElementById("programmerType");
+            const filterSelect = document.getElementById("filterType");
+            const newOptionForReview = option.cloneNode(true);
+            const newOptionForFilter = option.cloneNode(true);
+            reviewSelect.add(newOptionForReview);
+            filterSelect.add(newOptionForFilter);
+        }
+
+        function displayFreelancers() {
+            const freelancerList = document.getElementById("freelancerList");
+            freelancerList.innerHTML = '';
+            freelancers.forEach((freelancer, index) => {
+                const freelancerDiv = document.createElement("div");
+                freelancerDiv.innerHTML = `
+                    <strong>Name:</strong> ${freelancer.name}<br>
+                    <strong>Programming Field:</strong> ${freelancer.field}<br>
+                    <button class="delete-button" onclick="deleteFreelancer(${index})">Delete</button>
+                    <hr>
+                `;
+                freelancerList.appendChild(freelancerDiv);
+            });
+        }
+
+        function deleteFreelancer(index) {
+            freelancers.splice(index, 1);
+            displayFreelancers();
+        }
+    </script>
+</body>
+</html>

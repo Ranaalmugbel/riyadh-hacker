@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Programmers</title>
+    <style>
+        body {
+            background-image: url('image/info.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header, .info-section, .content {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7); 
+            border-radius: 8px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header img {
+            height: 60px;
+            margin-right: 20px;
+        }
+
+        .header span {
+            font-size: 24px;
+        }
+
+        .info-section h2 {
+            margin-top: 0;
+        }
+
+        label, select, input, textarea, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div class="navbar">
+    <a href="homep.html">Home</a>
+    <a href="contact.html">Contact</a>
+    <a href="info.html">Info</a>
+</div>
+
+    <div class="header">
+        <img src="image/logo.jpg" alt="Logo"> 
+        <span>Welcome to Riyadh Hacker - Where Skilled Freelance Programmers Meet Innovation</span>
+    </div>
+
+    <div class="info-section">
+        <h2>About Riyadh Hacker</h2>
+        <p>
+            Are you searching for top-notch freelance programmers who can bring your ideas to life? Hacker is the ultimate destination for businesses and individuals looking for skilled professionals across a wide range of specialties. Our community of experts offers a wealth of knowledge in iOS and Android development, game creation, artificial intelligence, backend and frontend engineering, and cybersecurity. But that’s not all—Hacker stands out as one of the few platforms with a quantum computing developer ready to take your projects to the next level.
+        </p>
+    </div>
+
+    <div class="content">
+        <h2>Submit a Review</h2>
+        <form id="reviewForm">
+            <label for="programmerType">Choose a Programmer Type:</label>
+            <select id="programmerType">
+                <option value="iOS">iOS</option>
+                <option value="Android">Android</option>
+                <option value="Games">Games</option>
+                <option value="AI">AI</option>
+                <option value="Backend">Backend</option>
+                <option value="Frontend">Frontend</option>
+                <option value="Cybersecurity">Cybersecurity</option>
+                <option value="Quantum Computing">Quantum Computing</option>
+            </select>
+
+            <label for="reviewerName">Your Name:</label>
+            <input type="text" id="reviewerName" required>
+
+            <label for="reviewText">Review:</label>
+            <textarea id="reviewText" required></textarea>
+
+            <button type="button" onclick="submitReview()">Submit Review</button>
+        </form>
+
+        <h2>Reviews</h2>
+        <label for="filterType">Filter by Programmer Type:</label>
+        <select id="filterType" onchange="displayReviews()">
+            <option value="All">All</option>
+            <option value="iOS">iOS</option>
+            <option value="Android">Android</option>
+            <option value="Games">Games</option>
+            <option value="AI">AI</option>
+            <option value="Backend">Backend</option>
+            <option value="Frontend">Frontend</option>
+            <option value="Cybersecurity">Cybersecurity</option>
+            <option value="Quantum Computing">Quantum Computing</option>
+        </select>
+        <div id="reviewsContainer"></div>
+    </div>
+
+    <script>
+        let reviews = [];
+
+        function submitReview() {
+            const programmerType = document.getElementById("programmerType").value;
+            const reviewerName = document.getElementById("reviewerName").value;
+            const reviewText = document.getElementById("reviewText").value;
+
+            reviews.push({ programmerType, reviewerName, reviewText });
+            document.getElementById("reviewForm").reset();
+            displayReviews();
+        }
+
+        function displayReviews() {
+            const filterType = document.getElementById("filterType").value;
+            const reviewsContainer = document.getElementById("reviewsContainer");
+            reviewsContainer.innerHTML = '';
+
+            reviews
+                .filter(review => filterType === "All" || review.programmerType === filterType)
+                .forEach(review => {
+                    const reviewDiv = document.createElement("div");
+                    reviewDiv.innerHTML = `
+                        <strong>Programmer Type:</strong> ${review.programmerType}<br>
+                        <strong>Name:</strong> ${review.reviewerName}<br>
+                        <strong>Review:</strong> ${review.reviewText}<br><hr>
+                    `;
+                    reviewsContainer.appendChild(reviewDiv);
+                });
+        }
+    </script>
+</body>
+</html>
